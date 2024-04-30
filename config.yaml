@@ -1,0 +1,164 @@
+open_ai:
+  api_key : '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'
+  model_name : 'gpt-4' #gpt-3.5-turbo-16k #'gpt-4-1106-preview' #'gpt-3.5-turbo-1106'
+  entity_extraction_temperature : 0.2
+  analysis_temperature : 0.4
+  feedback_temperature : 0.7
+
+
+prompts:
+  resume_header : "You're an intelligent and professional resume reviewer who will analyze and extract valuable information/insights from the given resume and return only a python dictionary with the extracted information"
+  resume_entity_extraction_prompt : "REQUIREMENT: Parse the given resume and extract the below-mentioned entities from it following the format of information to be returned as mentioned. If corresponding information is not available default the entity as 'Information Not Available'. Return only a perfect python dictionary with extracted entities
+  INPUT RESUME - {%s}
+  ENTITIES TO BE EXTRACTED
+  1. Job Titles - Extract all job titles mentioned in the resume. Returned information should be a list containing all mentioned job titles or 'Information Not Available' if no job titles are found.
+  2. Education - Extract all educational qualifications, returned Information should be a list containing all of the mentioned education.
+  3. Technical Skills - Extract primary and secondary technical skills separately. Returned information should include a paragraph containing both primary and secondary technical skills identified.
+  4. Years Of Experience: Extract the total years of experience; it should be calculated based on the information provided. Returned information should be in years (float datatype)
+  5. Work Authorization: Extract work authorization/Visa Type, if no such information is available in the resume return 'Information Not Available', returned information should either be extracted information or 'Information Not Available'
+  6. Employment Type: Extract information if the candidate is looking for a full-time/part-time/contractual role, returned Information should be - Full Time or Part Time or Contract or 'Information Not Available' if information is not available
+  7. Salary Expectations: Extract the expected salary from the resume; returned value should be a whole number along with currency if present and 'Information Not Available' if not present in resume
+  8. Roles and Responsibilities: Extract the roles and responsibilities from all jobs mentioned in the resume; returned information should be summarized in 2 sentences or 25 words.
+  9. Location: Extract the candidate's residential location information from the resume. Return the residential location mentioned in the resume or indicate 'Information not available' if it's not present.
+  10. Domain Expertise: Return the domains or sectors based on the companies mentioned in the resume and it should not include any technical skills; the returned information should be a list it could be a single domain or multiple domains. If no such information is available return 'Information not available'
+  11. Experience in Companies: Extract the companies where the candidate has mentioned from the resume; returned information should be a list containing names of companies worked. If no such information is available return 'Information not available'
+  12. Cultural Fit - Extract soft skills, values alignment, personality traits, cultural preferences from the resume and return the information within 2 sentences or 30 words.
+  13. Certifications and Licenses - Extract any certifications and licenses mentioned in the resume. Returned information should be a list containing all mentioned certifications and licenses. If no certifications or licenses are available return 'Information not available'.
+  14. Questions: Generate 1 to 3 questions in a polite and conversational manner for missing information in the extracted entities from a resume. For each entity marked as 'Information Not Available,' provide a range of questions and select the best question to include in the output. Return a dictionary with missing information as keys and the selected best questions as values.
+
+RETURN ONLY THE PYTHON DICTIONARY WITH THE FOLLOWING KEYS HAVING EXTRACTED ENTITIES AS VALUES GIVEN BELOW AND DON'T RETURN ANYTHING ELSE, THE OUTPUT MUST BE JSON PARSEABLE
+{
+  'job_title': Job Titles,
+  'education': Education,
+  'technical_skills': Technical Skills,
+  'years_of_experience': Years Of Experience,
+  'work_authorization': Work Authorization,
+  'employment_type': Employment Type,
+  'salary_expectations': Salary Expectations,
+  'roles_and_responsibilities': Roles and Responsibilities,
+  'location': Location,
+  'domain_expertise': Domain Expertise,
+  'experience_in_companies': Experience in Companies,
+  'cultural_fit': Cultural Fit,
+  'certifications_and_licenses': Certifications and Licenses,
+  'resume_preq': Questions
+}
+  
+  Ensure that the returned result is a perfect python dictionary"
+  job_description_header : "You're an intelligent and professional job description analyzer who will analyze and extract valuable information/insights from the given job description. Return only a perfect python dictionary with extracted entities"
+  job_description_entity_extraction_prompt : "REQUIREMENT: Parse the given job description and extract the below-mentioned entities from it following the format of information to be returned as mentioned. If corresponding information is not available default the entity as 'Information not available'. Return only the python dictionary representation of extracted entities
+  INPUT JOB DESCRIPTION - {%s}
+  ENTITIES TO BE EXTRACTED
+  1. Required Job Title: Extract the required job title mentioned in the job description or return 'Information Not Available' if no relevant information is found.
+  2. Education - Extract all the required education qualifications, returned Information should be a list containing all of the mentioned education
+  3. Technical Skills - Extract primary and secondary technical skills separately. Returned information should include a paragraph containing both primary and secondary technical skills identified.
+  4. Years Of Experience : Extract the required years of experience, it should be calculated based on the information provided, returned information should be in years(float datatype)
+  5. Work Authorization : Extract work authorization/Visa Type required for the job, if no such information is available in job description return 'Information Not Available', returned information should either be extracted information or 'Information Not Available'
+  6. Employment Type : Extract information of job type, whether it is full-time/part-time/contractual role, returned Information should be - Full Time or Part Time or Contract or Not Available if information is not available
+  7. Salary Expectations : Extract the salary information, returned value should be a whole number along with currency if present and Not Available if not present in job description
+  8. Roles and Responsibilities : Extract the roles and responsibilities required for the job, the returned information should be a paragraph summarized within 4 to 5 sentences
+  9. Location: Extract the job location information from the job description. Return the location mentioned in the job description or indicate 'Information not available' if it's not present.
+  10. Domain Expertise: Return the domains to which the job description could be classified into, it might be retail, BFSI or anything else, the returned information should be a list it could be single domain or multiple domains. If no such information is available return 'Information not available'
+  11. Experience in Companies: Extract the company name mentioned in job description, returned information should be a list containing the company name. If no such information is available return 'Information not available'
+  12. Cultural Fit - Extract soft skills, values allignment, personality traits, cultural preferences from the resume and return as a summarized paragraph in 3 lines.
+  13. Certifications and Licenses - Extract any certifications and licenses required for the job. Returned information should be a list containing all mentioned certifications and licenses. If no certifications or licenses is available return 'Information not available'.
+  14. Questions: Generate 1 to 3 questions in a polite and conversational manner for missing information in the extracted entities. For each entity marked as 'Information not available,' provide a range of questions and select the best question to include in the output. Return a dictionary with missing information as keys and the selected best questions as values.
+  RETURN ONLY THE PYTHON DICTIONARY WITH THE FOLLOWING KEYS HAVING EXTRACTED ENTITIES AS VALUES GIVEN BELOW AND DON'T RETURN ANYTHING ELSE, THE OUTPUT MUST BE JSON PARSABLE
+  {
+    'job_title': Required Job Title,
+    'education': Education,
+    'technical_skills': Technical Skills,
+    'years_of_experience': Years Of Experience,
+    'work_authorization': Work Authorization,
+    'employment_type': Employment Type,
+    'salary_expectations': Salary Expectations,
+    'roles_and_responsibilities': Roles and Responsibilities,
+    'location': Location,
+    'domain_expertise': Domain Expertise,
+    'experience_in_companies': Experience in Companies,
+    'cultural_fit': Cultural Fit,
+    'certifications_and_licenses': Certifications and Licenses,
+    'jd_preq': Questions
+  }
+  
+  Ensure that the returned result is a perfect python dictionary"
+  comparison_header : "You're an intelligent and professional resume reviewer who will analyze the given job description and resume"
+  comparison_analysis_prompt: "REQUIREMENT: Carefully analyze the job description - {%s} and resume - {%s} and return your analysis as mentioned in the instructions.
+  INSTRUCTIONS:
+  1. Job Titles Match - Compare 'job_titles' in the resume to 'required_job_title' in the job description. If either 'job_titles' in the resume or 'required_job_title' in the job description is Not Available, the result is 'Information Not Available'. If the 'job_titles' in the resume is a close match to the 'required_job_title' in the job description, the analyzed result should be 'Complete Match'. If there is a partial match or some overlap between the 'job_titles' in the resume and 'required_job_title' in the job description, the analyzed result should be 'Partial Match'. If there is no alignment or poor match between the 'job_titles' in the resume and 'required_job_title' in the job description, the analyzed result should be 'Not Matching'. Return the result as a list with 2 values, where the first value is the analyzed result and the second value is the justification.
+  2. Education Match - If the 'education' given in the resume or the 'education' given in the job description is Not Available, then the analyzed result should be 'Information Not available'. If the 'education' given in the resume matches with the 'education' given in the job description, the analyzed result should be 'Complete Match'. In case of a partial match, the analyzed result should be 'Partial Match'. If there is no match, the analyzed result should be 'Not Matching'. Return the result as a list with 2 values, where the first value should be the analyzed result and the second value should be the justification in less than 50 characters
+  3. Technical Skills Match - Compare primary and secondary technical skills of both resume and job description. Assess the relevance, similarity, or alignment between primary technical skills from the resume to those mentioned in the job description and separately for secondary technical skills. Return the analyzed information as a single paragraph, evaluating both primary and secondary technical skills.
+  4. Years of experience Match - Compare 'years_of_experience' required in job description with 'years_of_experience' in resume, if information not available in either job description or resume result is 'Information Not Available',  if the required experience is 2 years more than that in resume the result is 'Not Qualified', if required experience is less than resume the result is 'Qualified' and if the difference is 2 years return 'Could be considered', return a list having two elements, the first element is result and the second element is justification for the analysed result in less than 100 characters  
+  5. Work Authorization Match - Compare 'work_authorization' in the job description to the resume. If the information is not available in either the job description or the resume, result in 'Information Not Available'. If the required conditions are satisfied, the result is 'Authorized', else the result is 'Not Authorized'. Return a list having two elements, where the first element is the result and the second element is the justification of the arrived result in less than 50 characters
+  6. Employment Type Match - Compare 'employment_type' in the job description to the resume. If the information is not available in either the job description or the resume, result in 'Information Not Available'. If they both match, the result is 'Matching', else the result is 'Not Matching'. Return a list having two elements, where the first element is the result and the second element is the justification of the arrived result in less than 50 characters
+  7. Salary Expectations Match - Compare 'salary_expectations' in resume to job description, if information not available in either job description or resume result is 'Information Not Available' else if salary_expectations in resume is more than job description result is 'Not Matching' else result is 'Matching', return a list having two elements, the first element is result and the second element is justification of the arrived result in less than 50 characters
+  8. Roles and Responsibilities Match - Compare 'roles_and_responsibilities' in resume to job description, if information not available in either job description or resume result is 'Information Not Available', else if roles_and_responsibilities in job description match completely with roles_and_responsibilities in resume result in 'Complete Match', else if they partially match the result is 'Partial Match', in case of not matching the analyzed result should be 'Not Matching', return the result as a list with 2 values, the first value should be the analyzed result and second values should be the justification in less than 150 characters
+  9. Location Match - Compare the location from the resume to the location in the job description, if information not available in either job description or resume result is 'Information Not Available' If the locations match or are in close vicinity return 'Matching'. If they don't match or are far away from each other return 'Not Matching'. Return the result as a list with 2 values, the first value should be the analyzed result and second values should be the justification in less than 50 characters
+  10. Domain Expertise Match - Compare 'domain_expertise' in the job description to 'domain_expertise' in the resume. If either 'domain_expertise' in the job description or resume is Not Available, the result is 'Information Not Available'. If the 'domain_expertise' given in the job description is a close match to one of the 'domain_expertise' given in the resume, the analyzed result should be 'Complete Match'. If there is a partial match or some partial overlap between the 'domain_expertise' in the resume and job description, the analyzed result should be 'Partial Match'. If there is a poor match or no alignment between the 'domain_expertise' in the resume and job description, the analyzed result should be 'Not Matching'. Return the result as a list with 2 values, where the first value is the analyzed result and the second value is the justification in less than 150 characters
+  11. Experience in Companies Match - Compare 'experience_in_companies' in the job description to the resume, if information not available in either job description or resume result is 'Information Not Available'. If any of the experience_in_companies from resume works in similar areas to experience_in_companies in job description result is 'Matching' else result is 'Not Matching'. Return the result as a list with 2 values, where the first value is the analyzed result and the second value is the justification in less than 50 characters
+  12. Cultural Fit Match - Compare cultural_fit in the job description to the resume, if information not available in either job description or resume result is 'Information Not Available'. If cultural_fit in resume completely matches to the cultural_fit in job description then result is 'Complete Match', if it matches partially then result is 'Partial Match', if not matching then 'Not Matching'. Return the result as a list with 2 values, where the first value is the analyzed result and the second value is the justification in less than 50 characters
+  13. Certifications and Licenses Match - Compare 'certifications_and_licenses' in the job description to 'certifications_and_licenses' in the resume. If either 'certifications_and_licenses' in the job description or resume is Not Available, the result is 'Information Not Available'. If the 'certifications_and_licenses' given in the job description is a close match to those in the resume, the analyzed result should be 'Complete Match'. If there is a partial match or some partial overlap between the 'certifications_and_licenses' in the resume and job description, the analyzed result should be 'Partial Match'. If there is a poor match or no alignment between the 'certifications_and_licenses' in the resume and job description, the analyzed result should be 'Not Matching'. Return the result as a list with 2 values, where the first value is the analyzed result and the second value is the justification in less than 50 characters
+  RETURN ONLY THE PYTHON DICTIONARY WITH THE FOLLOWING KEYS HAVING EXTRACTED ENTITIES AS VALUES GIVEN BELOW AND DON'T RETURN ANYTHING ELSE, THE OUTPUT MUST BE PYTHON DICTIONARY
+  {
+    'job_title': Job Titles Match,
+    'education': Education Match,
+    'technical_skills': Technical Skills Match,
+    'years_of_experience': Years of Experience Match,
+    'work_authorization': Work Authorization Match,
+    'employment_type': Employment Type Match,
+    'salary_expectations': Salary Expectations Match,
+    'roles_and_responsibilities': Roles and Responsibilities Match,
+    'location': Location Match,
+    'domain_expertise': Domain Expertise Match,
+    'experience_in_companies': Experience in Companies Match,
+    'cultural_fit': Cultural Fit Match,
+    'certifications_and_licenses': Certifications and Licenses Match
+  }
+  
+  Ensure that the returned result is a perfect python dictionary"
+  technical_skill_header : "You're an intelligent and professional resume reviewer who will analyze the given required technical skill and analyzed information from a professional resume reviewer"
+  technical_skill_prompt : "REQUIREMENT : Carefully analyze the required technical skill - {%s} and analysis of a professional resume reviewer - {%s} and if both of them match result is 'Complete Match', if they match partially match result is 'Partial Match' and if there is a poor match result is 'Poor Match' and if its a complete mismatch result is 'Not Matching', return only the result which could only be 'Complete Match' or 'Partial Match' or 'Poor Match' or 'Not Matching'"
+  positive_highlight_header : "You're an intelligent and professional resume reviewer who will analyze the given information and return a stellar feedback as to why the candidate should be considered in less than 200 characters"
+  positive_highlights_prompt : "REQUIREMENT : Carefully analyze the information - {%s} and return a stellar feedback as to why the candidate should be considered for an interview in less than 200 characters"
+
+
+work_eligibility : "{
+  'US Work Authorization Eligible to Apply': [
+    'US Citizens',
+    'GC (Green Card) holders',
+    'EAD (Employment Authorization Document) holders'
+  ],
+  'Not Eligible to Apply': [
+    'H1B Visa holders'
+  ]
+}"
+
+weights:
+  job_title : 0.1
+  education : 1
+  years_of_experience : 2
+  technical_skills : 4
+  work_authorization : 1
+  employment_type : 1
+  salary_expectations : 0.3
+  location: 0.1
+  domain_expertise: 0.1
+  roles_and_responsibilities: 0.2
+  experience_in_similar_companies: 0.1
+  cultural_fit: 0.1
+  certifications_and_licenses: 0.1
+
+tables: ['maayu_insights', 'maayu_error']
+
+database:
+  user: 'postgres'
+  password: 'maayu'
+  host: 'localhost'
+  port: '5432'
+  database_name: 'Maayu'
+
+ui_display:
+  resume: [job_title, 'education', 'technical_skills', 'years_of_experience', 'work_authorization', 'employment_type', 'salary_expectations', 'roles_and_responsibilities', 'location', 'domain_expertise', 'experience_in_companies', 'cultural_fit', 'certifications_and_licenses', 'resume_preq']
+  jd: [job_title, 'education', 'technical_skills', 'years_of_experience', 'work_authorization', 'employment_type', 'salary_expectations', 'roles_and_responsibilities', 'location', 'domain_expertise', 'experience_in_companies', 'cultural_fit', 'certifications_and_licenses', 'jd_preq']
+  insights: ['maayu_score', 'maayu_feedback', 'positive_feedback']
+  maayu_feedback: [job_title, 'education', 'years_of_experience', 'technical_skills', 'work_authorization', 'employment_type', 'location', 'salary_expectations','domain_expertise', 'roles_and_responsibilities', 'experience_in_similar_companies','cultural_fit', 'certifications_and_licenses']
