@@ -3,7 +3,10 @@
 ## Key Features:
 Resume Parsing: Extracts relevant information from resumes, including job titles, education, experience, and skills.                                                       
 Job Description Analysis: Evaluates job descriptions to identify key requirements and qualifications.                                                                  
-Scoring System: Generates scores for different criteria, such as job title match, education level, years of experience, technical skills, and more.                 Insightful Feedback: Provides detailed analysis and feedback on each aspect of the candidate's profile.                                                           Customizable Configuration: Allows customization of scoring weights and displayed information for tailored recruitment processes.                                      FastAPI Web Application: Offers a user-friendly web interface for interacting with the application and viewing assessment results.
+Scoring System: Generates scores for different criteria, such as job title match, education level, years of experience, technical skills, and more.                
+Insightful Feedback: Provides detailed analysis and feedback on each aspect of the candidate's profile.                                                          
+Customizable Configuration: Allows customization of scoring weights and displayed information for tailored recruitment processes.                                      
+FastAPI Web Application: Offers a user-friendly web interface for interacting with the application and viewing assessment results.
 
 ## Dependencies:
 Python Libraries:
