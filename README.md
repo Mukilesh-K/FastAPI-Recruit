@@ -23,7 +23,7 @@ Install Python dependencies: pip install -r requirements.txt
 (Optional) Set up OpenAI API credentials.                                                                                                                               
 Start the FastAPI application:
 
-Run:
+## Run:
 ## Execution command
 ## uvicorn main:app --reload 
 to start the web server.
