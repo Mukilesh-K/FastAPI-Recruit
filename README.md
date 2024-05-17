@@ -22,6 +22,7 @@ Clone the repository: git clone https://github.com/your_username/Repo_name.git
 Install Python dependencies: pip install -r requirements.txt
 (Optional) Set up OpenAI API credentials.
 Start the FastAPI application:
+
 Run:
 ## Execution command
 ## uvicorn main:app --reload 
