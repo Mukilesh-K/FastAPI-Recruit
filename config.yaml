@@ -1,5 +1,5 @@
 open_ai:
-  api_key : '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'
+  api_key : 'Your_api_key_here'
   model_name : 'gpt-4' #gpt-3.5-turbo-16k #'gpt-4-1106-preview' #'gpt-3.5-turbo-1106'
   entity_extraction_temperature : 0.2
   analysis_temperature : 0.4
