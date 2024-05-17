@@ -18,8 +18,8 @@ OpenAI GPT-3 API (Optional): Utilizes the powerful GPT-3 model for natural langu
 
 ## Usage:
 Installation:
-Clone the repository: git clone https://github.com/your_username/Repo_name.git
-Install Python dependencies: pip install -r requirements.txt
+Clone the repository: git clone https://github.com/your_username/Repo_name.git                                                                                        
+Install Python dependencies: pip install -r requirements.txt                                                                                                        
 (Optional) Set up OpenAI API credentials.
 Start the FastAPI application:
 
